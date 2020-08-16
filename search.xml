@@ -34,6 +34,9 @@
     <title>算法排序的收集</title>
     <url>/2020/08/16/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86/</url>
     <content><![CDATA[<p>#一些术语</p>
+<ul>
+<li>稳定 ：如果a原本在b前面，而a=b，排序之后a仍然在b的前面；</li>
+</ul>
 ]]></content>
       <categories>
         <category>算法</category>

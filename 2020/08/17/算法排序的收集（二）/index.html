@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="非十大排序收集（二）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法排序的收集（二）">
+<meta property="og:url" content="http://yoursite.com/2020/08/17/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="qinmingshiguangxue blog">
+<meta property="og:description" content="非十大排序收集（二）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-17T02:28:05.000Z">
+<meta property="article:modified_time" content="2020-08-17T02:53:33.135Z">
+<meta property="article:author" content="Qinmingshiguangxue">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/17/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>算法排序的收集（二） | qinmingshiguangxue blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="qinmingshiguangxue blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">qinmingshiguangxue blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人类每次正视自己的渺小，都是自身的一次巨大进步。————《沙丘》</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/17/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/abc.png">
+      <meta itemprop="name" content="Qinmingshiguangxue">
+      <meta itemprop="description" content="随便玩玩的">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="qinmingshiguangxue blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法排序的收集（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-08-17 10:28:05 / Modified: 10:53:33" itemprop="dateCreated datePublished" datetime="2020-08-17T10:28:05+08:00">2020-08-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>6.2k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><font color="LightSkyBlue">非十大排序收集（二）</font></p>
+<a id="more"></a>
+<p><font color="LightSkyBlue">#11.睡眠排序（Sleep Sort）</font><br>排序算法一般是力求兼顾时间和空间的平衡，而睡眠排序算法却像是一个玩笑，当时间和空间两者消耗足够大，才能达到最终“精确”排序的目的。<br>基于根据CPU的调度算法实现。<br>我们要对一组数据进行排序，不能存在负数值，这个数是多大，那么就在线程里睡眠它的10倍时间（ms）再加10，不是睡眠和它的数值一样大的原因是，当数值太小时，误差太大，睡眠的时间不比输出的时间少，那么就会存在不正确的输出结果<br>##描述：<br>构造 n 个（n为待排序元素个数）线程（自定义），它们和这 n 个数一一对应。<br>初始化后，线程都按照指定的时间开始休眠，等休眠时间到了以后结束休眠，等被执行的时候输出它对应的数。<br>这样，最小的数对应的线程最早醒来，这个数最早被输出（理论上）。<br>等所有线程都结束休眠并被执行完成，排序就结束了。<br>注释：<br>[1] 当线程不太多的时候，基本可以认为它们是同时启动的。<br>[2] 主线程睡眠足够长时间，等所有Sleeper线程都执行完毕。可以把时间设成比最大输入稍大。<br>##Java代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class SleepSort &#123;  </span><br><span class="line">	</span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">    	</span><br><span class="line">        int[] arr &#x3D; &#123;1,4,7,3,8,9,2,6,5&#125;;</span><br><span class="line">        &#x2F;&#x2F;创建指定长度的线程数组</span><br><span class="line">        SortThread[] sortThreads &#x3D; new SortThread[arr.length];  </span><br><span class="line">        &#x2F;&#x2F;指定每个线程数组的值</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i] &#x3D; new SortThread(arr[i]);  </span><br><span class="line">        &#125; </span><br><span class="line">        &#x2F;&#x2F;开启每个线程</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i].start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">class SortThread extends Thread&#123;  </span><br><span class="line">    int s &#x3D; 0;  </span><br><span class="line">    public SortThread(int s)&#123;  </span><br><span class="line">        this.s &#x3D; s;  </span><br><span class="line">    &#125;  </span><br><span class="line">    public void run()&#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            sleep(s*10+10);  &#x2F;&#x2F;睡眠指定的时间</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">              </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">        &#x2F;&#x2F;输出该数</span><br><span class="line">        System.out.println(s);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##缺点：</p>
+<ul>
+<li>当出现一个很大的数字，会睡眠很长时间（效率低）</li>
+<li>当数字相差很小，会不精准（不精准）</li>
+<li>不能处理负数（虽然可以在加上一个正数，再进行睡眠排序，但是得不偿失）</li>
+<li>排序使用到了多线程，有点“杀鸡焉用宰牛刀”的感觉</li>
+</ul>
+<p><font color="LightSkyBlue">#12.猴子排序（Bogo Sort）</font><br>猴子排序，这个排序思路也很风骚，它的思想是：一组数字，随机一次，若随机后的结果不是有序的，再随机一次。。。直到随机的结果是有序的，理论上，只要时间足够长，必定能排好序。就像一组无序的扑克牌，让猴子打乱一次，若还是无序的，猴子再打乱一次。<br>See also 无限猴子定理 ：一只猴子随机敲打打字机键盘，如果时间足够长，总是能打出特定的文本，比如莎士比亚全集。<br>##描述：</p>
+<ul>
+<li>定义数组 </li>
+<li>数组随机 </li>
+<li>检验数组是否有序，无序继续，有序了就停止<br>##Java代码实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Random random &#x3D; new Random();</span><br><span class="line"></span><br><span class="line">public void bogoSort(int[] n) &#123;</span><br><span class="line">    while(!inOrder(n)) shuffle(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void shuffle(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length; i++) &#123;</span><br><span class="line">        int swapPosition &#x3D; random.nextInt(i + 1);</span><br><span class="line">        int temp &#x3D; n[i];</span><br><span class="line">        n[i] &#x3D; n[swapPosition];</span><br><span class="line">        n[swapPosition] &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public boolean inOrder(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length-1; i++) &#123;</span><br><span class="line">        if (n[i] &gt; n[i+1]) return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+##C++代码实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">inline void Shuffle()</span><br><span class="line">&#123;</span><br><span class="line">	for(int randnum,i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		randnum&#x3D;rand()%(n-i+1),</span><br><span class="line">		swap(a[i],a[i+randnum]);</span><br><span class="line">&#125;</span><br><span class="line">inline bool Check()</span><br><span class="line">&#123;</span><br><span class="line">	for(int i&#x3D;2;i&lt;&#x3D;n;i++)</span><br><span class="line">		if(a[i]&lt;a[i-1])</span><br><span class="line">			return false;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line">void Bogo_Sort()</span><br><span class="line">&#123;</span><br><span class="line">	while(!Check())</span><br><span class="line">		Shuffle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font color="LightSkyBlue">#13.面条排序（Spaghetti Sort）</font><br>面条排序呢，它的思想是：一组数字array，再来一把面条，array里的最大值对应面条的高度，数字和面条高度由此可以得到一个系数，这个系数就是数字数值和面条高度的映射关系（比如，数字是 1到10，面条是十根，每一根面条都是高度10，那这个系数就是1），array里的数字对应每一根面条，再把多出的高度给折掉，最终就得到长短不一的十根面条，然后把十根面条放桌子上端平，用手平行于桌面，从上往下，最先碰到手的，先拿开。这样面条排好序了，array也排好序了。<br>##代码实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public void noodleSort(int[] arr) &#123;</span><br><span class="line">      &#x2F;** 模拟手 *&#x2F;</span><br><span class="line">      int hand&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 获取最小值 模拟桌子 防止手一直运动*&#x2F;</span><br><span class="line">      int min&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 将最大值赋给变量  *&#x2F;</span><br><span class="line">      for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">          if(hand&lt;arr[i]) &#123;</span><br><span class="line">              hand&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">          if(min&gt;arr[i]) &#123;</span><br><span class="line">              min&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      for (int i &#x3D; arr.length-1; hand&gt;&#x3D;min; hand--) &#123;</span><br><span class="line">          for (int j &#x3D; 0; j &lt;&#x3D; i; j++) &#123;</span><br><span class="line">              if(hand&#x3D;&#x3D;arr[j]) &#123;</span><br><span class="line">                  &#x2F;** j为什么要-- 防止交换的数字本身也等于hand *&#x2F;</span><br><span class="line">                  arr[j--]&#x3D;arr[i];</span><br><span class="line">                  arr[i--]&#x3D;hand;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><font color="LightSkyBlue">#14.拓扑排序</font><br>实际上，拓扑排序是一种图论算法，该算法在《数据结构与算法》一书中有涉猎。引用维基百科的定义：<br>在图论中，由一个有向无环图的顶点组成的序列，当且仅当满足下列条件时，称为该图的一个拓扑排序。<br>（1）每个顶点出现且只出现一次；<br>（2）若A在序列中排在B的前面，则在图中不存在从B到A的路径。<br>也可以定义为：拓扑排序是对有向无环图的顶点的一种排序，它使得如果存在一条从顶点A到顶点B的路径，那么在排序中B出现在A的后面。<br>##描述：</p>
+<ol>
+<li>在有向图中选一个没有前驱的顶点并且输出</li>
+<li>从图中删除该顶点和所有以它为尾的弧（白话就是：删除所有和它有关的边）</li>
+<li>重复上述两步，直至所有顶点输出，或者当前图中不存在无前驱的顶点为止，后者代表我们的有向图是有环的，因此，也可以通过拓扑排序来判断一个图是否有环。</li>
+</ol>
+<p>##C++代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long ll;</span><br><span class="line">vector&lt;int&gt;edge[30010],ans;</span><br><span class="line">priority_queue&lt;int&gt;q;</span><br><span class="line">int in[30010];</span><br><span class="line">int T,n,m;</span><br><span class="line">void init()</span><br><span class="line">&#123;</span><br><span class="line">    for(int i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        edge[i].clear();</span><br><span class="line">        in[i]&#x3D;0;</span><br><span class="line">    &#125;</span><br><span class="line">    while(!q.empty()) q.pop();</span><br><span class="line">    ans.clear();</span><br><span class="line">&#125;</span><br><span class="line">void solve()</span><br><span class="line">&#123;</span><br><span class="line">    int i,j;</span><br><span class="line">    for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">        if(in[i]&#x3D;&#x3D;0) q.push(i);</span><br><span class="line">    while(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        int p&#x3D;q.top(); q.pop();</span><br><span class="line">        ans.push_back(p);</span><br><span class="line">        for( i&#x3D;0; i&lt;edge[p].size(); i++ )</span><br><span class="line">        &#123;</span><br><span class="line">            int v&#x3D;edge[p][i];</span><br><span class="line">            in[v]--;</span><br><span class="line">            if(in[v]&#x3D;&#x3D;0) q.push(v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;ans.size()-1;i&gt;0;i--)</span><br><span class="line">        printf(&quot;%d &quot;,ans[i]);</span><br><span class="line">    printf(&quot;%d\n&quot;,ans[0]);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;T);</span><br><span class="line">    while(T--)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">        init();</span><br><span class="line">        while(m--)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf(&quot;%d%d&quot;,&amp;a,&amp;b);</span><br><span class="line">            edge[b].push_back(a);</span><br><span class="line">            in[a]++;</span><br><span class="line">        &#125;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们说快速排序是不稳定的，这是因为最后的快排结果中相同元素的出现顺序和排序前不一致了。如果用偏序的概念可以这样解释这一现象：相同值的元素之间的关系是无法确定的。因此它们在最终的结果中的出现顺序可以是任意的。而对于诸如插入排序这种稳定性排序，它们对于值相同的元素，还有一个潜在的比较方式，即比较它们的出现顺序，出现靠前的元素大于出现后出现的元素。因此通过这一潜在的比较，将偏序关系转换为了全序关系，从而保证了结果的唯一性。而拓扑排序就是一种将偏序转换为全序的一种算法。<br>偏序：有向图中两个顶点之间不存在环路，至于连通与否，是无所谓的。<br>全序：就是在偏序的基础之上，有向无环图中的任意一对顶点还需要有明确的关系(反映在图中，就是单向连通的关系，注意不能双向连通，那就成环了)。<br>意思就是讲，一个不确定的偏序关系经全序后就有一种确定的先后顺序了。<br>拓扑排序实质上就是一种偏序到全序的排序算法。</p>
+<p><font color="LightSkyBlue">#15.珠排序</font><br>每当播完算盘时，都会将算盘立起来复原算盘。珠算法的原理跟算盘立起的动作相关。</p>
+<ul>
+<li>将数组的数字转换为每行的珠的个数。</li>
+<li>将每行的珠子都用签子串起来。</li>
+<li>此时立起所有的签子，会自动的将珠进行排序。</li>
+<li>例如下图：当立起签子时，上方6的珠子会往下方落。</li>
+</ul>
+<p>O(1)：即所有珠子都同时移动，但这种算法只是概念上的，无法在计算机中实现。<br>O(√n)：在真实的物理世界中用引力实现，所需时间正比于珠子最大高度的平方根，而最大高度正比于n。<br>O(n)：一次移动一列珠子，可以用模拟和数字的硬件实现。<br>O(S)，S是所有输入数据的和：一次移动一个珠子，能在软件中实现。<br>##C代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"> </span><br><span class="line">void bead_sort(int *a, int len)</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, max, sum;</span><br><span class="line">	unsigned char *beads;</span><br><span class="line">#	define BEAD(i, j) beads[i * max + j]</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 1, max &#x3D; a[0]; i &lt; len; i++)</span><br><span class="line">		if (a[i] &gt; max) max &#x3D; a[i];</span><br><span class="line"> </span><br><span class="line">	beads &#x3D;(unsigned char*)calloc(1, max * len);</span><br><span class="line"> </span><br><span class="line">	&#x2F;* mark the beads *&#x2F;</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		for (j &#x3D; 0; j &lt; a[i]; j++)</span><br><span class="line">			BEAD(i, j) &#x3D; 1;</span><br><span class="line"> </span><br><span class="line">	for (j &#x3D; 0; j &lt; max; j++) &#123;</span><br><span class="line">		&#x2F;* count how many beads are on each post *&#x2F;</span><br><span class="line">		for (sum &#x3D; i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">			sum +&#x3D; BEAD(i, j);</span><br><span class="line">			BEAD(i, j) &#x3D; 0;</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;* mark bottom sum beads *&#x2F;</span><br><span class="line">		for (i &#x3D; len - sum; i &lt; len; i++) BEAD(i, j) &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">		for (j &#x3D; 0; j &lt; max &amp;&amp; BEAD(i, j); j++);</span><br><span class="line">		a[i] &#x3D; j;</span><br><span class="line">	&#125;</span><br><span class="line">	free(beads);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int i, x[] &#x3D; &#123;5, 3, 1, 7, 4, 1, 1, 20&#125;;</span><br><span class="line">	int len &#x3D; sizeof(x)&#x2F;sizeof(x[0]);</span><br><span class="line"> </span><br><span class="line">	bead_sort(x, len);</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		printf(&quot;%d\n&quot;, x[i]);</span><br><span class="line"> </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i>
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/16/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86/" rel="prev" title="算法排序的收集">
+      <i class="fa fa-chevron-left"></i> 算法排序的收集
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qinmingshiguangxue"
+      src="/images/abc.png">
+  <p class="site-author-name" itemprop="name">Qinmingshiguangxue</p>
+  <div class="site-description" itemprop="description">随便玩玩的</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://qinmingshiguangxue.github.io/" title="GitHub → https:&#x2F;&#x2F;qinmingshiguangxue.github.io&#x2F;" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://qinling9.8@foxmail.com/" title="E-Mail → https:&#x2F;&#x2F;qinling9.8@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2428952475" title="QQ → 2428952475"><i class="fab fa-QQ fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qinmingshiguangxue</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">24k</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

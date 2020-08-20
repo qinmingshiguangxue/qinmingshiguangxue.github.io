@@ -267,4 +267,23 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>密码的练习</title>
+    <url>/2020/08/20/%E5%AF%86%E7%A0%81%E7%9A%84%E7%BB%83%E4%B9%A0/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="密码不正确，请重新输入！" data-whm="文章不能被校验, 不过您还是能看看解密后的内容！">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">该文章已加密，请输入密码查看！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="d6e40fb54e740f11f39a17cc9edd04a15321ba1394dd50849f9aea19f5afb840">d48f10c95ca6e0be273bd0fbd427730625d21a2d17acaa899021764869e0c8408842ce853e729750df444b526e538b1a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>练习</category>
+      </categories>
+      <tags>
+        <tag>加密</tag>
+      </tags>
+  </entry>
 </search>

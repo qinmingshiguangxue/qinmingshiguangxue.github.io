@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>第一次使用</title>
-    <url>/2020/06/25/%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98/</url>
-    <content><![CDATA[<p> 第一次用，实验看看能不能成功……<br> <img src="/2020/06/25/%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98/abc.jpg" alt></p>
-]]></content>
+    <title>密码的练习</title>
+    <url>/2020/08/20/%E5%AF%86%E7%A0%81%E7%9A%84%E7%BB%83%E4%B9%A0/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="密码不正确，请重新输入！" data-whm="文章不能被校验, 不过您还是能看看解密后的内容！">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">该文章已加密，请输入密码查看！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="d6e40fb54e740f11f39a17cc9edd04a15321ba1394dd50849f9aea19f5afb840">d48f10c95ca6e0be273bd0fbd427730625d21a2d17acaa899021764869e0c8408842ce853e729750df444b526e538b1a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
         <category>练习</category>
       </categories>
       <tags>
-        <tag>随手乱写</tag>
+        <tag>加密</tag>
       </tags>
   </entry>
   <entry>
@@ -150,65 +157,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法排序的收集（二）</title>
-    <url>/2020/08/17/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p><font color="LightSkyBlue">非十大排序收集（二）</font></p>
-<ul>
-<li>稳定 ：如果a原本在b前面，而a=b，排序之后a仍然在b的前面</li>
-<li>不稳定 ：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面</li>
-<li>内排序 ：所有排序操作都在内存中完成</li>
-<li>外排序 ：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；</li>
-<li>时间复杂度 ： 一个算法执行所耗费的时间；</li>
-<li>空间复杂度 ：运行完一个程序所需内存的大小；</li>
-<li>n: 数据规模</li>
-<li>k: “桶”的个数</li>
-<li>In-place: 占用常数内存，不占用额外内存</li>
-<li>Out-place: 占用额外内存<a id="more"></a>
-<font color="LightSkyBlue">#11.睡眠排序（Sleep Sort）</font><br>排序算法一般是力求兼顾时间和空间的平衡，而睡眠排序算法却像是一个玩笑，当时间和空间两者消耗足够大，才能达到最终“精确”排序的目的。<br>基于根据CPU的调度算法实现。<br>我们要对一组数据进行排序，不能存在负数值，这个数是多大，那么就在线程里睡眠它的10倍时间（ms）再加10，不是睡眠和它的数值一样大的原因是，当数值太小时，误差太大，睡眠的时间不比输出的时间少，那么就会存在不正确的输出结果<br>##描述：<br>构造 n 个（n为待排序元素个数）线程（自定义），它们和这 n 个数一一对应。<br>初始化后，线程都按照指定的时间开始休眠，等休眠时间到了以后结束休眠，等被执行的时候输出它对应的数。<br>这样，最小的数对应的线程最早醒来，这个数最早被输出（理论上）。<br>等所有线程都结束休眠并被执行完成，排序就结束了。<br>注释：<br>[1] 当线程不太多的时候，基本可以认为它们是同时启动的。<br>[2] 主线程睡眠足够长时间，等所有Sleeper线程都执行完毕。可以把时间设成比最大输入稍大。<br>##Java代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class SleepSort &#123;  </span><br><span class="line">	</span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">    	</span><br><span class="line">        int[] arr &#x3D; &#123;1,4,7,3,8,9,2,6,5&#125;;</span><br><span class="line">        &#x2F;&#x2F;创建指定长度的线程数组</span><br><span class="line">        SortThread[] sortThreads &#x3D; new SortThread[arr.length];  </span><br><span class="line">        &#x2F;&#x2F;指定每个线程数组的值</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i] &#x3D; new SortThread(arr[i]);  </span><br><span class="line">        &#125; </span><br><span class="line">        &#x2F;&#x2F;开启每个线程</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i].start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">class SortThread extends Thread&#123;  </span><br><span class="line">    int s &#x3D; 0;  </span><br><span class="line">    public SortThread(int s)&#123;  </span><br><span class="line">        this.s &#x3D; s;  </span><br><span class="line">    &#125;  </span><br><span class="line">    public void run()&#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            sleep(s*10+10);  &#x2F;&#x2F;睡眠指定的时间</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">              </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">        &#x2F;&#x2F;输出该数</span><br><span class="line">        System.out.println(s);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-##缺点：</li>
-<li>当出现一个很大的数字，会睡眠很长时间（效率低）</li>
-<li>当数字相差很小，会不精准（不精准）</li>
-<li>不能处理负数（虽然可以在加上一个正数，再进行睡眠排序，但是得不偿失）</li>
-<li>排序使用到了多线程，有点“杀鸡焉用宰牛刀”的感觉</li>
-</ul>
-<p><font color="LightSkyBlue">#12.猴子排序（Bogo Sort）</font><br>猴子排序，这个排序思路也很风骚，它的思想是：一组数字，随机一次，若随机后的结果不是有序的，再随机一次。。。直到随机的结果是有序的，理论上，只要时间足够长，必定能排好序。就像一组无序的扑克牌，让猴子打乱一次，若还是无序的，猴子再打乱一次。<br>See also 无限猴子定理 ：一只猴子随机敲打打字机键盘，如果时间足够长，总是能打出特定的文本，比如莎士比亚全集。<br>##描述：</p>
-<ul>
-<li>定义数组 </li>
-<li>数组随机 </li>
-<li>检验数组是否有序，无序继续，有序了就停止<br>##Java代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Random random &#x3D; new Random();</span><br><span class="line"></span><br><span class="line">public void bogoSort(int[] n) &#123;</span><br><span class="line">    while(!inOrder(n)) shuffle(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void shuffle(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length; i++) &#123;</span><br><span class="line">        int swapPosition &#x3D; random.nextInt(i + 1);</span><br><span class="line">        int temp &#x3D; n[i];</span><br><span class="line">        n[i] &#x3D; n[swapPosition];</span><br><span class="line">        n[swapPosition] &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public boolean inOrder(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length-1; i++) &#123;</span><br><span class="line">        if (n[i] &gt; n[i+1]) return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-##C++代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inline void Shuffle()</span><br><span class="line">&#123;</span><br><span class="line">	for(int randnum,i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		randnum&#x3D;rand()%(n-i+1),</span><br><span class="line">		swap(a[i],a[i+randnum]);</span><br><span class="line">&#125;</span><br><span class="line">inline bool Check()</span><br><span class="line">&#123;</span><br><span class="line">	for(int i&#x3D;2;i&lt;&#x3D;n;i++)</span><br><span class="line">		if(a[i]&lt;a[i-1])</span><br><span class="line">			return false;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line">void Bogo_Sort()</span><br><span class="line">&#123;</span><br><span class="line">	while(!Check())</span><br><span class="line">		Shuffle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<font color="LightSkyBlue">#13.面条排序（Spaghetti Sort）</font><br>面条排序呢，它的思想是：一组数字array，再来一把面条，array里的最大值对应面条的高度，数字和面条高度由此可以得到一个系数，这个系数就是数字数值和面条高度的映射关系（比如，数字是 1到10，面条是十根，每一根面条都是高度10，那这个系数就是1），array里的数字对应每一根面条，再把多出的高度给折掉，最终就得到长短不一的十根面条，然后把十根面条放桌子上端平，用手平行于桌面，从上往下，最先碰到手的，先拿开。这样面条排好序了，array也排好序了。<br>##代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void noodleSort(int[] arr) &#123;</span><br><span class="line">      &#x2F;** 模拟手 *&#x2F;</span><br><span class="line">      int hand&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 获取最小值 模拟桌子 防止手一直运动*&#x2F;</span><br><span class="line">      int min&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 将最大值赋给变量  *&#x2F;</span><br><span class="line">      for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">          if(hand&lt;arr[i]) &#123;</span><br><span class="line">              hand&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">          if(min&gt;arr[i]) &#123;</span><br><span class="line">              min&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      for (int i &#x3D; arr.length-1; hand&gt;&#x3D;min; hand--) &#123;</span><br><span class="line">          for (int j &#x3D; 0; j &lt;&#x3D; i; j++) &#123;</span><br><span class="line">              if(hand&#x3D;&#x3D;arr[j]) &#123;</span><br><span class="line">                  &#x2F;** j为什么要-- 防止交换的数字本身也等于hand *&#x2F;</span><br><span class="line">                  arr[j--]&#x3D;arr[i];</span><br><span class="line">                  arr[i--]&#x3D;hand;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><font color="LightSkyBlue">#14.拓扑排序</font><br>实际上，拓扑排序是一种图论算法，该算法在《数据结构与算法》一书中有涉猎。引用维基百科的定义：<br>在图论中，由一个有向无环图的顶点组成的序列，当且仅当满足下列条件时，称为该图的一个拓扑排序。<br>（1）每个顶点出现且只出现一次；<br>（2）若A在序列中排在B的前面，则在图中不存在从B到A的路径。<br>也可以定义为：拓扑排序是对有向无环图的顶点的一种排序，它使得如果存在一条从顶点A到顶点B的路径，那么在排序中B出现在A的后面。<br>##描述：</p>
-<ol>
-<li>在有向图中选一个没有前驱的顶点并且输出</li>
-<li>从图中删除该顶点和所有以它为尾的弧（白话就是：删除所有和它有关的边）</li>
-<li>重复上述两步，直至所有顶点输出，或者当前图中不存在无前驱的顶点为止，后者代表我们的有向图是有环的，因此，也可以通过拓扑排序来判断一个图是否有环。</li>
-</ol>
-<p>##C++代码实现</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long ll;</span><br><span class="line">vector&lt;int&gt;edge[30010],ans;</span><br><span class="line">priority_queue&lt;int&gt;q;</span><br><span class="line">int in[30010];</span><br><span class="line">int T,n,m;</span><br><span class="line">void init()</span><br><span class="line">&#123;</span><br><span class="line">    for(int i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        edge[i].clear();</span><br><span class="line">        in[i]&#x3D;0;</span><br><span class="line">    &#125;</span><br><span class="line">    while(!q.empty()) q.pop();</span><br><span class="line">    ans.clear();</span><br><span class="line">&#125;</span><br><span class="line">void solve()</span><br><span class="line">&#123;</span><br><span class="line">    int i,j;</span><br><span class="line">    for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">        if(in[i]&#x3D;&#x3D;0) q.push(i);</span><br><span class="line">    while(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        int p&#x3D;q.top(); q.pop();</span><br><span class="line">        ans.push_back(p);</span><br><span class="line">        for( i&#x3D;0; i&lt;edge[p].size(); i++ )</span><br><span class="line">        &#123;</span><br><span class="line">            int v&#x3D;edge[p][i];</span><br><span class="line">            in[v]--;</span><br><span class="line">            if(in[v]&#x3D;&#x3D;0) q.push(v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;ans.size()-1;i&gt;0;i--)</span><br><span class="line">        printf(&quot;%d &quot;,ans[i]);</span><br><span class="line">    printf(&quot;%d\n&quot;,ans[0]);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;T);</span><br><span class="line">    while(T--)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">        init();</span><br><span class="line">        while(m--)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf(&quot;%d%d&quot;,&amp;a,&amp;b);</span><br><span class="line">            edge[b].push_back(a);</span><br><span class="line">            in[a]++;</span><br><span class="line">        &#125;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们说快速排序是不稳定的，这是因为最后的快排结果中相同元素的出现顺序和排序前不一致了。如果用偏序的概念可以这样解释这一现象：相同值的元素之间的关系是无法确定的。因此它们在最终的结果中的出现顺序可以是任意的。而对于诸如插入排序这种稳定性排序，它们对于值相同的元素，还有一个潜在的比较方式，即比较它们的出现顺序，出现靠前的元素大于出现后出现的元素。因此通过这一潜在的比较，将偏序关系转换为了全序关系，从而保证了结果的唯一性。而拓扑排序就是一种将偏序转换为全序的一种算法。<br>偏序：有向图中两个顶点之间不存在环路，至于连通与否，是无所谓的。<br>全序：就是在偏序的基础之上，有向无环图中的任意一对顶点还需要有明确的关系(反映在图中，就是单向连通的关系，注意不能双向连通，那就成环了)。<br>意思就是讲，一个不确定的偏序关系经全序后就有一种确定的先后顺序了。<br>拓扑排序实质上就是一种偏序到全序的排序算法。</p>
-<p><font color="LightSkyBlue">#15.珠排序</font><br>每当播完算盘时，都会将算盘立起来复原算盘。珠算法的原理跟算盘立起的动作相关。</p>
-<ul>
-<li>将数组的数字转换为每行的珠的个数。</li>
-<li>将每行的珠子都用签子串起来。</li>
-<li>此时立起所有的签子，会自动的将珠进行排序。</li>
-<li>例如下图：当立起签子时，上方6的珠子会往下方落。</li>
-</ul>
-<p>O(1)：即所有珠子都同时移动，但这种算法只是概念上的，无法在计算机中实现。<br>O(√n)：在真实的物理世界中用引力实现，所需时间正比于珠子最大高度的平方根，而最大高度正比于n。<br>O(n)：一次移动一列珠子，可以用模拟和数字的硬件实现。<br>O(S)，S是所有输入数据的和：一次移动一个珠子，能在软件中实现。<br>##C代码实现</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"> </span><br><span class="line">void bead_sort(int *a, int len)</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, max, sum;</span><br><span class="line">	unsigned char *beads;</span><br><span class="line">#	define BEAD(i, j) beads[i * max + j]</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 1, max &#x3D; a[0]; i &lt; len; i++)</span><br><span class="line">		if (a[i] &gt; max) max &#x3D; a[i];</span><br><span class="line"> </span><br><span class="line">	beads &#x3D;(unsigned char*)calloc(1, max * len);</span><br><span class="line"> </span><br><span class="line">	&#x2F;* mark the beads *&#x2F;</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		for (j &#x3D; 0; j &lt; a[i]; j++)</span><br><span class="line">			BEAD(i, j) &#x3D; 1;</span><br><span class="line"> </span><br><span class="line">	for (j &#x3D; 0; j &lt; max; j++) &#123;</span><br><span class="line">		&#x2F;* count how many beads are on each post *&#x2F;</span><br><span class="line">		for (sum &#x3D; i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">			sum +&#x3D; BEAD(i, j);</span><br><span class="line">			BEAD(i, j) &#x3D; 0;</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;* mark bottom sum beads *&#x2F;</span><br><span class="line">		for (i &#x3D; len - sum; i &lt; len; i++) BEAD(i, j) &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">		for (j &#x3D; 0; j &lt; max &amp;&amp; BEAD(i, j); j++);</span><br><span class="line">		a[i] &#x3D; j;</span><br><span class="line">	&#125;</span><br><span class="line">	free(beads);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int i, x[] &#x3D; &#123;5, 3, 1, 7, 4, 1, 1, 20&#125;;</span><br><span class="line">	int len &#x3D; sizeof(x)&#x2F;sizeof(x[0]);</span><br><span class="line"> </span><br><span class="line">	bead_sort(x, len);</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		printf(&quot;%d\n&quot;, x[i]);</span><br><span class="line"> </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-        <tag>Java</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法排序的收集（三）</title>
     <url>/2020/08/18/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%B8%89%EF%BC%89/</url>
     <content><![CDATA[<p><font color="LightSkyBlue">非十大排序（三）</font></p>
@@ -268,22 +216,74 @@
       </tags>
   </entry>
   <entry>
-    <title>密码的练习</title>
-    <url>/2020/08/20/%E5%AF%86%E7%A0%81%E7%9A%84%E7%BB%83%E4%B9%A0/</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="密码不正确，请重新输入！" data-whm="文章不能被校验, 不过您还是能看看解密后的内容！">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">该文章已加密，请输入密码查看！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="d6e40fb54e740f11f39a17cc9edd04a15321ba1394dd50849f9aea19f5afb840">d48f10c95ca6e0be273bd0fbd427730625d21a2d17acaa899021764869e0c8408842ce853e729750df444b526e538b1a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    <title>第一次使用</title>
+    <url>/2020/06/25/%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98/</url>
+    <content><![CDATA[<p> 第一次用，实验看看能不能成功……<br> <img src="/2020/06/25/%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98/abc.jpg" alt></p>
+]]></content>
       <categories>
         <category>练习</category>
       </categories>
       <tags>
-        <tag>加密</tag>
+        <tag>随手乱写</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法排序的收集（二）</title>
+    <url>/2020/08/17/%E7%AE%97%E6%B3%95%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p><font color="LightSkyBlue">非十大排序收集（二）</font></p>
+<ul>
+<li>稳定 ：如果a原本在b前面，而a=b，排序之后a仍然在b的前面</li>
+<li>不稳定 ：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面</li>
+<li>内排序 ：所有排序操作都在内存中完成</li>
+<li>外排序 ：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；</li>
+<li>时间复杂度 ： 一个算法执行所耗费的时间；</li>
+<li>空间复杂度 ：运行完一个程序所需内存的大小；</li>
+<li>n: 数据规模</li>
+<li>k: “桶”的个数</li>
+<li>In-place: 占用常数内存，不占用额外内存</li>
+<li>Out-place: 占用额外内存<a id="more"></a>
+<font color="LightSkyBlue">#11.睡眠排序（Sleep Sort）</font><br>排序算法一般是力求兼顾时间和空间的平衡，而睡眠排序算法却像是一个玩笑，当时间和空间两者消耗足够大，才能达到最终“精确”排序的目的。<br>基于根据CPU的调度算法实现。<br>我们要对一组数据进行排序，不能存在负数值，这个数是多大，那么就在线程里睡眠它的10倍时间（ms）再加10，不是睡眠和它的数值一样大的原因是，当数值太小时，误差太大，睡眠的时间不比输出的时间少，那么就会存在不正确的输出结果<br>##描述：<br>构造 n 个（n为待排序元素个数）线程（自定义），它们和这 n 个数一一对应。<br>初始化后，线程都按照指定的时间开始休眠，等休眠时间到了以后结束休眠，等被执行的时候输出它对应的数。<br>这样，最小的数对应的线程最早醒来，这个数最早被输出（理论上）。<br>等所有线程都结束休眠并被执行完成，排序就结束了。<br>注释：<br>[1] 当线程不太多的时候，基本可以认为它们是同时启动的。<br>[2] 主线程睡眠足够长时间，等所有Sleeper线程都执行完毕。可以把时间设成比最大输入稍大。<br>##Java代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class SleepSort &#123;  </span><br><span class="line">	</span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">    	</span><br><span class="line">        int[] arr &#x3D; &#123;1,4,7,3,8,9,2,6,5&#125;;</span><br><span class="line">        &#x2F;&#x2F;创建指定长度的线程数组</span><br><span class="line">        SortThread[] sortThreads &#x3D; new SortThread[arr.length];  </span><br><span class="line">        &#x2F;&#x2F;指定每个线程数组的值</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i] &#x3D; new SortThread(arr[i]);  </span><br><span class="line">        &#125; </span><br><span class="line">        &#x2F;&#x2F;开启每个线程</span><br><span class="line">        for (int i &#x3D; 0; i &lt; sortThreads.length; i++) &#123;  </span><br><span class="line">            sortThreads[i].start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">class SortThread extends Thread&#123;  </span><br><span class="line">    int s &#x3D; 0;  </span><br><span class="line">    public SortThread(int s)&#123;  </span><br><span class="line">        this.s &#x3D; s;  </span><br><span class="line">    &#125;  </span><br><span class="line">    public void run()&#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            sleep(s*10+10);  &#x2F;&#x2F;睡眠指定的时间</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">              </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">        &#x2F;&#x2F;输出该数</span><br><span class="line">        System.out.println(s);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+##缺点：</li>
+<li>当出现一个很大的数字，会睡眠很长时间（效率低）</li>
+<li>当数字相差很小，会不精准（不精准）</li>
+<li>不能处理负数（虽然可以在加上一个正数，再进行睡眠排序，但是得不偿失）</li>
+<li>排序使用到了多线程，有点“杀鸡焉用宰牛刀”的感觉</li>
+</ul>
+<p><font color="LightSkyBlue">#12.猴子排序（Bogo Sort）</font><br>猴子排序，这个排序思路也很风骚，它的思想是：一组数字，随机一次，若随机后的结果不是有序的，再随机一次。。。直到随机的结果是有序的，理论上，只要时间足够长，必定能排好序。就像一组无序的扑克牌，让猴子打乱一次，若还是无序的，猴子再打乱一次。<br>See also 无限猴子定理 ：一只猴子随机敲打打字机键盘，如果时间足够长，总是能打出特定的文本，比如莎士比亚全集。<br>##描述：</p>
+<ul>
+<li>定义数组 </li>
+<li>数组随机 </li>
+<li>检验数组是否有序，无序继续，有序了就停止<br>##Java代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Random random &#x3D; new Random();</span><br><span class="line"></span><br><span class="line">public void bogoSort(int[] n) &#123;</span><br><span class="line">    while(!inOrder(n)) shuffle(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void shuffle(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length; i++) &#123;</span><br><span class="line">        int swapPosition &#x3D; random.nextInt(i + 1);</span><br><span class="line">        int temp &#x3D; n[i];</span><br><span class="line">        n[i] &#x3D; n[swapPosition];</span><br><span class="line">        n[swapPosition] &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public boolean inOrder(int[] n) &#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n.length-1; i++) &#123;</span><br><span class="line">        if (n[i] &gt; n[i+1]) return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+##C++代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inline void Shuffle()</span><br><span class="line">&#123;</span><br><span class="line">	for(int randnum,i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		randnum&#x3D;rand()%(n-i+1),</span><br><span class="line">		swap(a[i],a[i+randnum]);</span><br><span class="line">&#125;</span><br><span class="line">inline bool Check()</span><br><span class="line">&#123;</span><br><span class="line">	for(int i&#x3D;2;i&lt;&#x3D;n;i++)</span><br><span class="line">		if(a[i]&lt;a[i-1])</span><br><span class="line">			return false;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line">void Bogo_Sort()</span><br><span class="line">&#123;</span><br><span class="line">	while(!Check())</span><br><span class="line">		Shuffle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font color="LightSkyBlue">#13.面条排序（Spaghetti Sort）</font><br>面条排序呢，它的思想是：一组数字array，再来一把面条，array里的最大值对应面条的高度，数字和面条高度由此可以得到一个系数，这个系数就是数字数值和面条高度的映射关系（比如，数字是 1到10，面条是十根，每一根面条都是高度10，那这个系数就是1），array里的数字对应每一根面条，再把多出的高度给折掉，最终就得到长短不一的十根面条，然后把十根面条放桌子上端平，用手平行于桌面，从上往下，最先碰到手的，先拿开。这样面条排好序了，array也排好序了。<br>##代码实现<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void noodleSort(int[] arr) &#123;</span><br><span class="line">      &#x2F;** 模拟手 *&#x2F;</span><br><span class="line">      int hand&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 获取最小值 模拟桌子 防止手一直运动*&#x2F;</span><br><span class="line">      int min&#x3D;arr[0];</span><br><span class="line">      &#x2F;** 将最大值赋给变量  *&#x2F;</span><br><span class="line">      for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">          if(hand&lt;arr[i]) &#123;</span><br><span class="line">              hand&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">          if(min&gt;arr[i]) &#123;</span><br><span class="line">              min&#x3D;arr[i];</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      for (int i &#x3D; arr.length-1; hand&gt;&#x3D;min; hand--) &#123;</span><br><span class="line">          for (int j &#x3D; 0; j &lt;&#x3D; i; j++) &#123;</span><br><span class="line">              if(hand&#x3D;&#x3D;arr[j]) &#123;</span><br><span class="line">                  &#x2F;** j为什么要-- 防止交换的数字本身也等于hand *&#x2F;</span><br><span class="line">                  arr[j--]&#x3D;arr[i];</span><br><span class="line">                  arr[i--]&#x3D;hand;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><font color="LightSkyBlue">#14.拓扑排序</font><br>实际上，拓扑排序是一种图论算法，该算法在《数据结构与算法》一书中有涉猎。引用维基百科的定义：<br>在图论中，由一个有向无环图的顶点组成的序列，当且仅当满足下列条件时，称为该图的一个拓扑排序。<br>（1）每个顶点出现且只出现一次；<br>（2）若A在序列中排在B的前面，则在图中不存在从B到A的路径。<br>也可以定义为：拓扑排序是对有向无环图的顶点的一种排序，它使得如果存在一条从顶点A到顶点B的路径，那么在排序中B出现在A的后面。<br>##描述：</p>
+<ol>
+<li>在有向图中选一个没有前驱的顶点并且输出</li>
+<li>从图中删除该顶点和所有以它为尾的弧（白话就是：删除所有和它有关的边）</li>
+<li>重复上述两步，直至所有顶点输出，或者当前图中不存在无前驱的顶点为止，后者代表我们的有向图是有环的，因此，也可以通过拓扑排序来判断一个图是否有环。</li>
+</ol>
+<p>##C++代码实现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long ll;</span><br><span class="line">vector&lt;int&gt;edge[30010],ans;</span><br><span class="line">priority_queue&lt;int&gt;q;</span><br><span class="line">int in[30010];</span><br><span class="line">int T,n,m;</span><br><span class="line">void init()</span><br><span class="line">&#123;</span><br><span class="line">    for(int i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        edge[i].clear();</span><br><span class="line">        in[i]&#x3D;0;</span><br><span class="line">    &#125;</span><br><span class="line">    while(!q.empty()) q.pop();</span><br><span class="line">    ans.clear();</span><br><span class="line">&#125;</span><br><span class="line">void solve()</span><br><span class="line">&#123;</span><br><span class="line">    int i,j;</span><br><span class="line">    for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">        if(in[i]&#x3D;&#x3D;0) q.push(i);</span><br><span class="line">    while(!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        int p&#x3D;q.top(); q.pop();</span><br><span class="line">        ans.push_back(p);</span><br><span class="line">        for( i&#x3D;0; i&lt;edge[p].size(); i++ )</span><br><span class="line">        &#123;</span><br><span class="line">            int v&#x3D;edge[p][i];</span><br><span class="line">            in[v]--;</span><br><span class="line">            if(in[v]&#x3D;&#x3D;0) q.push(v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;ans.size()-1;i&gt;0;i--)</span><br><span class="line">        printf(&quot;%d &quot;,ans[i]);</span><br><span class="line">    printf(&quot;%d\n&quot;,ans[0]);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;T);</span><br><span class="line">    while(T--)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">        init();</span><br><span class="line">        while(m--)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf(&quot;%d%d&quot;,&amp;a,&amp;b);</span><br><span class="line">            edge[b].push_back(a);</span><br><span class="line">            in[a]++;</span><br><span class="line">        &#125;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们说快速排序是不稳定的，这是因为最后的快排结果中相同元素的出现顺序和排序前不一致了。如果用偏序的概念可以这样解释这一现象：相同值的元素之间的关系是无法确定的。因此它们在最终的结果中的出现顺序可以是任意的。而对于诸如插入排序这种稳定性排序，它们对于值相同的元素，还有一个潜在的比较方式，即比较它们的出现顺序，出现靠前的元素大于出现后出现的元素。因此通过这一潜在的比较，将偏序关系转换为了全序关系，从而保证了结果的唯一性。而拓扑排序就是一种将偏序转换为全序的一种算法。<br>偏序：有向图中两个顶点之间不存在环路，至于连通与否，是无所谓的。<br>全序：就是在偏序的基础之上，有向无环图中的任意一对顶点还需要有明确的关系(反映在图中，就是单向连通的关系，注意不能双向连通，那就成环了)。<br>意思就是讲，一个不确定的偏序关系经全序后就有一种确定的先后顺序了。<br>拓扑排序实质上就是一种偏序到全序的排序算法。</p>
+<p><font color="LightSkyBlue">#15.珠排序</font><br>每当播完算盘时，都会将算盘立起来复原算盘。珠算法的原理跟算盘立起的动作相关。</p>
+<ul>
+<li>将数组的数字转换为每行的珠的个数。</li>
+<li>将每行的珠子都用签子串起来。</li>
+<li>此时立起所有的签子，会自动的将珠进行排序。</li>
+<li>例如下图：当立起签子时，上方6的珠子会往下方落。</li>
+</ul>
+<p>O(1)：即所有珠子都同时移动，但这种算法只是概念上的，无法在计算机中实现。<br>O(√n)：在真实的物理世界中用引力实现，所需时间正比于珠子最大高度的平方根，而最大高度正比于n。<br>O(n)：一次移动一列珠子，可以用模拟和数字的硬件实现。<br>O(S)，S是所有输入数据的和：一次移动一个珠子，能在软件中实现。<br>##C代码实现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"> </span><br><span class="line">void bead_sort(int *a, int len)</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, max, sum;</span><br><span class="line">	unsigned char *beads;</span><br><span class="line">#	define BEAD(i, j) beads[i * max + j]</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 1, max &#x3D; a[0]; i &lt; len; i++)</span><br><span class="line">		if (a[i] &gt; max) max &#x3D; a[i];</span><br><span class="line"> </span><br><span class="line">	beads &#x3D;(unsigned char*)calloc(1, max * len);</span><br><span class="line"> </span><br><span class="line">	&#x2F;* mark the beads *&#x2F;</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		for (j &#x3D; 0; j &lt; a[i]; j++)</span><br><span class="line">			BEAD(i, j) &#x3D; 1;</span><br><span class="line"> </span><br><span class="line">	for (j &#x3D; 0; j &lt; max; j++) &#123;</span><br><span class="line">		&#x2F;* count how many beads are on each post *&#x2F;</span><br><span class="line">		for (sum &#x3D; i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">			sum +&#x3D; BEAD(i, j);</span><br><span class="line">			BEAD(i, j) &#x3D; 0;</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;* mark bottom sum beads *&#x2F;</span><br><span class="line">		for (i &#x3D; len - sum; i &lt; len; i++) BEAD(i, j) &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">		for (j &#x3D; 0; j &lt; max &amp;&amp; BEAD(i, j); j++);</span><br><span class="line">		a[i] &#x3D; j;</span><br><span class="line">	&#125;</span><br><span class="line">	free(beads);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int i, x[] &#x3D; &#123;5, 3, 1, 7, 4, 1, 1, 20&#125;;</span><br><span class="line">	int len &#x3D; sizeof(x)&#x2F;sizeof(x[0]);</span><br><span class="line"> </span><br><span class="line">	bead_sort(x, len);</span><br><span class="line">	for (i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">		printf(&quot;%d\n&quot;, x[i]);</span><br><span class="line"> </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>Java</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
 </search>

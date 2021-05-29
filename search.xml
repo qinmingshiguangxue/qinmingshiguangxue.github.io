@@ -286,4 +286,88 @@
         <tag>C++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>‘typora的一些写法</title>
+    <url>/2021/05/29/%E2%80%98typora%E7%9A%84%E4%B8%80%E4%BA%9B%E5%86%99%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Markdown语法（Typora）：</p>
+<p>1.标题</p>
+<p>#一级标题  例：</p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><p>—快捷键：Ctrl+1</p>
+<p>##二级标题 例：</p>
+<h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>—快捷键：Ctrl+2</p>
+<p>###三级标题 例：</p>
+<h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><p>—快捷键：Ctrl+3</p>
+<p>####四级标题 例：</p>
+<h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><p>—快捷键：Ctrl+4</p>
+<p>#####五级标题 例：</p>
+<h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><p>—快捷键：Ctrl+5</p>
+<p>######六级标题 例：</p>
+<h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><p>—快捷键：Ctrl+6</p>
+<p>最后一个#要与文字间隔空格</p>
+<p>2.粗体，斜体，删除线，下划线</p>
+<p>斜体：       *号加在内容两边        快捷键：Ctrl+I</p>
+<p>粗体：      **号加在内容两边       快捷键：Ctrl+B</p>
+<p>加粗斜体：***号加在内容两边</p>
+<p>删除线：  ~~号加在内容两边       快捷键：Alt+Shift+5</p>
+<p>下划线：快捷键：Ctrl+U</p>
+<p>3.引用块</p>
+<p>文字引用：      &gt;内容</p>
+<p>4.代码块</p>
+<p>’行内代码‘          快捷键：Ctrl+Shift+‘</p>
+<p>’‘’</p>
+<p>多行代码           快捷键：Ctrl+Shift+K</p>
+<p>多行代码           (`是英文输入状态下)</p>
+<p>‘’‘</p>
+<p>5.公式块</p>
+<p>$$ 数学公式 $$          快捷键： Ctrl+Shift+M</p>
+<p>6.分割线</p>
+<p>（1）：- - -</p>
+<p>（2）：+ + +</p>
+<p>（3）：* * *</p>
+<p>7.列表</p>
+<p>有序：1.       快捷键：Ctrl+Shift+[</p>
+<p>无序：*        快捷键：Ctrl+Shift+]</p>
+<p>​           +</p>
+<p>​           -</p>
+<p>8.表格</p>
+<p>表头1|表头2                  快捷键：Ctrl+T</p>
+<p>-|-|-</p>
+<p>内容11|内容12</p>
+<p>内容21|内容22</p>
+<p>9.超链接</p>
+<p>方法一：[想要链接的文字] (链接的地址 “链接描述”)</p>
+<p> 方法二：&lt;链接地址&gt; </p>
+<p>快捷键：Ctrl+K</p>
+<p>10.图片</p>
+<p>![图片文字] (图片地址 “图片描述”) </p>
+<p>例如：![示例图片] (链接网址 “示例图片”)</p>
+<p>注：插入图片时，要保证图片在与title同名的文件夹里，即可使用对应的图片添加代码↑</p>
+<p>头部的设置：</p>
+<p>在每篇利用 Hexo 创建的文章的开头，都会有对文章进行说明的文字，叫做 文章头部文章的头部除了可以设置文章标题、发布日期等基础信息外，还可以为文章添加标签、分类等</p>
+<p>一个简单的示例如下：</p>
+<p>title: Title </p>
+<p>date: YYYY-MM-DD HH:MM:SS </p>
+<p>tags: [tag1, tag2, …] </p>
+<p>categories: category</p>
+<p>注：属性和属性值之间必须有一个空格，否则会解析错误</p>
+<p>模板设置：</p>
+<p>当我们使用命令 <code>hexo new &quot;title&quot;</code> 创建文章时，Hexo 会根据 <code>/scaffolds/post.md</code> 对新文章进行初始化</p>
+<p>换言之，<code>/scaffolds/post.md</code> 就是新文章的 <strong>模板</strong>，所以我们可以修改它来适应自己的写作习惯</p>
+<p>一个简单的示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags: </span><br><span class="line">categories:</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首页显示：</p>
+<p>利用 Hexo 框架搭建的博客网站中，首页会显示文章的内容，且默认显示文章的全部内容</p>
+<p>如果当文章太长的时候就会显得十分冗余，所以我们有必要对其进行精简</p>
+<p>这时，我们只需在文章中使用&lt;! –more–&gt; 标志即可，表示只会显示标志前面的内容</p>
+]]></content>
+      <categories>
+        <category>练习</category>
+      </categories>
+      <tags>
+        <tag>typora</tag>
+      </tags>
+  </entry>
 </search>
